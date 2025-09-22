@@ -21,12 +21,12 @@ static void vl53l1x_LL_Init(void)
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_AFIO, ENABLE);
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1  , ENABLE);
 
-    MyGPIO.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2;
+    MyGPIO.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2; // sda&scl
     MyGPIO.GPIO_Mode = GPIO_Mode_AF_OD;
     MyGPIO.GPIO_Speed=GPIO_Speed_50MHz;
     GPIO_Init(GPIOC, &MyGPIO);
 
-    MyGPIO.GPIO_Pin = GPIO_Pin_3 ;
+    MyGPIO.GPIO_Pin = GPIO_Pin_3 ; // xshut pin
     MyGPIO.GPIO_Mode = GPIO_Mode_Out_PP;
     MyGPIO.GPIO_Speed=GPIO_Speed_50MHz;
     GPIO_Init(GPIOC, &MyGPIO);
@@ -52,6 +52,7 @@ int vl53l1x_init(void)
 
     vl53l1x_LL_Init();
 
+    // xshut pin
 	GPIO_ResetBits(GPIOC,GPIO_Pin_3);
 	HAL_Delay(250);
     GPIO_SetBits(GPIOC,GPIO_Pin_3);
